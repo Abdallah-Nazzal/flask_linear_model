@@ -26,7 +26,7 @@ def predict_house_price():
         features = request.get_json()
         price = 0
         
-        # for loop 
+        # for loop to calculate the price by multiply feature and thetas
         for index, feature in enumerate(features["features"]):
             price += float(feature) * float(thetas[index])
 
