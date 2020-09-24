@@ -2,6 +2,8 @@ from flask import Flask,render_template,request
 import json
 import pandas as pd
 
+
+# define thetas 
 theta0 = None
 thetas = None
 
