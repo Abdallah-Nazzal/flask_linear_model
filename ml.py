@@ -9,6 +9,7 @@ import pickle
 app = Flask(__name__)
 
 
+
 @app.route('/')
 def hello():
     return 'Hello, World!'
@@ -20,6 +21,7 @@ def predict_house_price():
  
     #   if the request is POST
     if request.method == 'POST':
+
 
         #   get the features as dictionary 
         features = request.get_json()
@@ -53,5 +55,5 @@ def predict_house_price():
 
 if __name__ == '__main__':
 
-    app.run(debug=True, use_reloader=False)
+    app.run(debug=True, use_reloader=False,host ='0.0.0.0')
 
