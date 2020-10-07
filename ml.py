@@ -1,11 +1,8 @@
 from flask import Flask,render_template,request
 import json
 import pandas as pd
-
-
-# define thetas 
-theta0 = None
-thetas = None
+import numpy as np
+import pickle
 
 
 
@@ -21,25 +18,31 @@ def hello():
 @app.route('/predict', methods = ["GET", "POST"])
 def predict_house_price():
  
-    #if the request is POST
+    #   if the request is POST
     if request.method == 'POST':
 
-        # get the features as dictionary 
+        #   get the features as dictionary 
         features = request.get_json()
-        price = 0
+      
+        #   load the linear model
+        loaded_model = pickle.load(open('./model.sav', 'rb'))
         
-        # for loop to calculate the price by multiply feature and thetas
-        for index, feature in enumerate(features["features"]):
-            price += float(feature) * float(thetas[index])
+        #  use the loaded model to predict  
+        x = np.array(features["features"]).reshape(1,6)
+        result = loaded_model.predict(x)
 
-        price += theta0    
+        if x.shape[0] == 1:
+            result = result[0]
 
-        # return price as a string
-        return json.dumps(price)
+        print(result)
+
+        #   return price as a string 
+        return json.dumps(result)
 
 
 
     else:
+        
         return 'hello world'
 
          
@@ -49,13 +52,6 @@ def predict_house_price():
 
 
 if __name__ == '__main__':
-
-    # read the parameters from the csv file
-    parameters = pd.read_csv('lm_parameters.csv')
-
-    
-    thetas = parameters.columns 
-    theta0 = pd.read_csv('lm_parameters.csv').iloc[0,0]
 
     app.run(debug=True, use_reloader=False)
 
