@@ -19,4 +19,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "heroku--flask" #Must be unique in Heroku
           heroku_email: "aqabd9@gmail.com"
-          usedocker: true
+          usedocker: 1
+          dontuseforce: 1
+      - run: heroku stack:set heroku-20  
